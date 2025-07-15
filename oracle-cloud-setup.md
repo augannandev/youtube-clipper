@@ -21,28 +21,17 @@
 4. **Security Rules**: In your VCN → Security Lists → Default Security List
    - Add Ingress Rule: Port 8000, Source: 0.0.0.0/0
 
-## 3. Upload Your Code to Oracle Cloud
+## 3. Deploy Code to Oracle Cloud VM
 
-After VM is created, get the public IP and run these commands locally:
-
-```bash
-# From your local youtube-clipper directory
-tar -czf youtube-clipper.tar.gz backend/ frontend/ yclip/ requirements.txt
-
-# Upload to Oracle Cloud (replace YOUR_VM_IP with actual IP)
-scp -i ~/.ssh/your-key youtube-clipper.tar.gz ubuntu@YOUR_VM_IP:~/
-```
-
-## 4. Setup on Oracle Cloud VM
-
-SSH into your VM and run:
+SSH into your VM and clone directly from GitHub:
 
 ```bash
 # SSH into VM
 ssh -i ~/.ssh/your-key ubuntu@YOUR_VM_IP
 
-# Extract files
-tar -xzf youtube-clipper.tar.gz
+# Clone repository
+git clone https://github.com/augannandev/youtube-clipper.git
+cd youtube-clipper
 
 # Install dependencies
 sudo apt update && sudo apt upgrade -y
@@ -81,7 +70,7 @@ sudo systemctl start youtube-clipper
 sudo systemctl status youtube-clipper
 ```
 
-## 5. Deploy Frontend to Vercel
+## 4. Deploy Frontend to Vercel
 
 1. **Sign up**: Go to https://vercel.com (GitHub login recommended)
 2. **Deploy**:
@@ -94,7 +83,7 @@ sudo systemctl status youtube-clipper
    - In Vercel dashboard → Your Project → Settings → Environment Variables
    - Add: `VITE_API_URL` = `http://YOUR_ORACLE_VM_IP:8000`
 
-## 6. Test Your Deployment
+## 5. Test Your Deployment
 
 - **Backend**: http://YOUR_ORACLE_VM_IP:8000/health
 - **Frontend**: Your Vercel URL (e.g., https://youtube-clipper-frontend.vercel.app)
