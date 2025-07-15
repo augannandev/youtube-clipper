@@ -327,7 +327,7 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) file for 
 
 ## 📞 Support
 
-- 📧 **Email**: your-email@example.com
+- 📧 **Email**: augdevops1@gmail.com
 - 🐛 **Issues**: [GitHub Issues](https://github.com/your-username/youtube-clipper/issues)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/your-username/youtube-clipper/discussions)
 
