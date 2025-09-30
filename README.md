@@ -13,7 +13,7 @@ A full-stack web application that allows users to download custom clips from You
 - 📱 **Modern UI**: Beautiful, responsive interface built with React and Tailwind CSS
 - ⚡ **Fast Processing**: Efficient video processing using yt-dlp and FFmpeg
 - 📥 **Direct Downloads**: Download clips directly to your device
-- 🔒 **Quality Control**: Supports up to 720p video quality
+- 🔒 **Quality Control**: Supports up to 4K (2160p) video quality
 - ⏱️ **Duration Limits**: Clips limited to 45 minutes for optimal performance
 - 🎛️ **Player Controls**: Built-in video player with seek, play/pause controls
 
@@ -97,41 +97,31 @@ docker-compose up --build
 
 ## 📦 Deployment
 
-### Option 1: Oracle Cloud Free Tier (Recommended)
+### Option 1: Railway.app (Recommended) 🚂
 
-Perfect for the free tier with ARM-based VMs:
+**Cost: ~$10-15/month** | **Setup Time: 5 minutes**
 
-1. **Create Oracle Cloud VM**
-   - VM: VM.Standard.A1.Flex
-   - OS: Ubuntu 22.04 ARM
-   - CPU: 2 vCPU
-   - RAM: 4-8 GB
-   - Storage: 50GB+ (for temporary video files)
+Railway is perfect for video processing applications with auto-scaling and simple deployment.
 
-2. **Configure Security Rules**
-   ```bash
-   # Allow HTTP traffic on port 8000
-   sudo ufw allow 8000/tcp
-   sudo ufw allow 22/tcp
-   sudo ufw enable
-   ```
+1. **Deploy Backend to Railway**
+   - Go to [Railway.app](https://railway.app) and sign up
+   - Click **"New Project"** → **"Deploy from GitHub repo"**
+   - Select `youtube-clipper` repository
+   - Set **Root Directory**: `/backend`
+   - Railway auto-detects Dockerfile and deploys
+   - Get your URL: `https://your-app.up.railway.app`
 
-3. **Deploy Backend**
-   ```bash
-   # SSH into your VM
-   ssh ubuntu@YOUR_VM_IP
-   
-   # Clone and run setup script
-   git clone https://github.com/your-username/youtube-clipper.git
-   cd youtube-clipper
-   chmod +x backend/setup.sh
-   ./backend/setup.sh
-   ```
+2. **Deploy Frontend on Vercel**
+   - Go to [Vercel.com](https://vercel.com) and sign up
+   - Click **"New Project"** → Select `youtube-clipper` repo
+   - Set **Root Directory**: `/frontend`
+   - Add environment variable:
+     ```
+     VITE_API_URL=https://your-app.up.railway.app
+     ```
+   - Deploy!
 
-4. **Deploy Frontend on Vercel**
-   - Connect your GitHub repository to Vercel
-   - Set environment variable: `VITE_API_URL=http://YOUR_VM_IP:8000`
-   - Deploy automatically on push
+**📖 Detailed Guide**: See [RAILWAY_DEPLOYMENT.md](./RAILWAY_DEPLOYMENT.md) for step-by-step instructions
 
 ### Option 2: Docker Deployment
 
