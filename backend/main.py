@@ -72,17 +72,11 @@ def validate_duration(start_time: str, end_time: str) -> None:
 async def download_video(url: str, output_path: str) -> str:
     """Download YouTube video using yt-dlp"""
     ydl_opts = {
-        # Download best available format (handles both regular and HLS streams)
-        'format': 'best',
+        # Use default format (yt-dlp will choose the best available)
+        # This is the most compatible option for all video types
         'outtmpl': os.path.join(output_path, '%(title)s.%(ext)s'),
         'quiet': False,  # Enable logging to debug issues
         'no_warnings': False,
-        # Ensure output is mp4
-        'merge_output_format': 'mp4',
-        'postprocessors': [{
-            'key': 'FFmpegVideoConvertor',
-            'preferedformat': 'mp4',
-        }],
     }
     
     try:
