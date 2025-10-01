@@ -77,6 +77,14 @@ async def download_video(url: str, output_path: str) -> str:
         'outtmpl': os.path.join(output_path, '%(title)s.%(ext)s'),
         'quiet': False,  # Enable logging to debug issues
         'no_warnings': False,
+        'noplaylist': True,  # Download only the video, not the playlist
+        'nocheckcertificate': True,  # Bypass SSL certificate verification
+        'geo_bypass': True,  # Bypass geographic restrictions
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['ios', 'web'],  # Use multiple clients to avoid blocks
+            }
+        },
     }
     
     try:
