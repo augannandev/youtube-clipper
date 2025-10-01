@@ -82,7 +82,8 @@ async def download_video(url: str, output_path: str) -> str:
         'geo_bypass': True,  # Bypass geographic restrictions
         'extractor_args': {
             'youtube': {
-                'player_client': ['ios', 'web'],  # Use multiple clients to avoid blocks
+                'player_client': ['android', 'web'],  # Android client is more reliable
+                'player_skip': ['webpage', 'configs'],  # Skip web extraction
             }
         },
     }
