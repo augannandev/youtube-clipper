@@ -72,9 +72,9 @@ def validate_duration(start_time: str, end_time: str) -> None:
 async def download_video(url: str, output_path: str) -> str:
     """Download YouTube video using yt-dlp"""
     ydl_opts = {
-        # Download highest quality available (up to 4K if available)
-        # Prefer mp4 format for better compatibility with ffmpeg
-        'format': 'bestvideo[ext=mp4][height<=2160]+bestaudio[ext=m4a]/bestvideo[height<=2160]+bestaudio/best[height<=2160]/best',
+        # Download best quality available, with flexible fallbacks
+        # This ensures compatibility with various video formats
+        'format': 'bestvideo[height<=2160]+bestaudio/best[height<=2160]/best',
         'outtmpl': os.path.join(output_path, '%(title)s.%(ext)s'),
         'quiet': True,
         'no_warnings': True,
@@ -82,6 +82,8 @@ async def download_video(url: str, output_path: str) -> str:
         'merge_output_format': 'mp4',
         # Use faster download options
         'concurrent_fragment_downloads': 4,
+        # Prefer free formats
+        'format_sort': ['res:2160', 'ext:mp4:m4a'],
     }
     
     try:
