@@ -117,27 +117,30 @@ const YouTubePlayer = ({ videoId, onStartTimeSet, onEndTimeSet, startTime, endTi
 
   if (!videoId) {
     return (
-      <div className="card">
-        <div className="flex items-center justify-center h-64 bg-gray-100 rounded-lg">
-          <p className="text-gray-500">Enter a YouTube URL to load the player</p>
+      <div className="card-modern">
+        <div className="flex flex-col items-center justify-center h-64 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl border-2 border-dashed border-gray-300">
+          <div className="text-6xl mb-4">🎥</div>
+          <p className="text-gray-500 text-lg">Enter a YouTube URL to load the player</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="card">
-      <div className="mb-4">
-        <div ref={playerRef} className="w-full rounded-lg overflow-hidden" />
+    <div className="card-modern hover:shadow-2xl transition-all duration-300">
+      <div className="mb-6">
+        <div ref={playerRef} className="w-full rounded-2xl overflow-hidden shadow-xl" />
       </div>
       
       {/* Player Controls */}
-      <div className="space-y-4">
+      <div className="space-y-6">
         {/* Current Time Display */}
         <div className="text-center">
-          <span className="text-lg font-mono bg-gray-100 px-3 py-1 rounded">
-            {secondsToTimeString(currentTime)} / {secondsToTimeString(duration)}
-          </span>
+          <div className="inline-block bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-6 py-3 rounded-full shadow-lg">
+            <span className="text-xl font-mono font-bold">
+              {secondsToTimeString(currentTime)} / {secondsToTimeString(duration)}
+            </span>
+          </div>
         </div>
 
         {/* Control Buttons */}
@@ -145,60 +148,68 @@ const YouTubePlayer = ({ videoId, onStartTimeSet, onEndTimeSet, startTime, endTi
           <button
             onClick={() => handleSeek(-10)}
             disabled={!isReady}
-            className="btn-secondary flex items-center space-x-1"
+            className="btn-control flex items-center space-x-2"
           >
-            <SkipBack size={16} />
+            <SkipBack size={18} />
             <span>-10s</span>
           </button>
           
           <button
             onClick={handlePlayPause}
             disabled={!isReady}
-            className="btn-primary flex items-center space-x-1"
+            className="btn-play flex items-center space-x-2"
           >
-            {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-            <span>{isPlaying ? 'Pause' : 'Play'}</span>
+            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+            <span className="font-semibold">{isPlaying ? 'Pause' : 'Play'}</span>
           </button>
           
           <button
             onClick={() => handleSeek(10)}
             disabled={!isReady}
-            className="btn-secondary flex items-center space-x-1"
+            className="btn-control flex items-center space-x-2"
           >
             <span>+10s</span>
-            <SkipForward size={16} />
+            <SkipForward size={18} />
           </button>
         </div>
 
         {/* Timestamp Setting Buttons */}
-        <div className="flex justify-center space-x-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
           <button
             onClick={handleSetStartTime}
             disabled={!isReady}
-            className="btn-primary"
+            className="btn-timestamp-start"
           >
-            Set Start Time
+            <span className="text-lg">📍</span>
+            <span className="font-semibold">Set Start Time</span>
           </button>
           
           <button
             onClick={handleSetEndTime}
             disabled={!isReady}
-            className="btn-primary"
+            className="btn-timestamp-end"
           >
-            Set End Time
+            <span className="text-lg">🏁</span>
+            <span className="font-semibold">Set End Time</span>
           </button>
         </div>
 
         {/* Selected Times Display */}
         {(startTime || endTime) && (
-          <div className="bg-primary-50 p-4 rounded-lg">
-            <h3 className="font-semibold text-primary-700 mb-2">Selected Times:</h3>
-            <div className="space-y-1">
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl border-2 border-green-200 shadow-inner">
+            <h3 className="font-bold text-green-800 mb-3 text-lg">✅ Selected Times:</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {startTime && (
-                <p><span className="font-medium">Start:</span> {startTime}</p>
+                <div className="bg-white/70 p-3 rounded-lg">
+                  <span className="text-sm text-gray-600 block mb-1">Start Time</span>
+                  <p className="text-lg font-mono font-bold text-green-700">{startTime}</p>
+                </div>
               )}
               {endTime && (
-                <p><span className="font-medium">End:</span> {endTime}</p>
+                <div className="bg-white/70 p-3 rounded-lg">
+                  <span className="text-sm text-gray-600 block mb-1">End Time</span>
+                  <p className="text-lg font-mono font-bold text-green-700">{endTime}</p>
+                </div>
               )}
             </div>
           </div>

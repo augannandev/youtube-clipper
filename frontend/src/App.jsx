@@ -121,48 +121,55 @@ function App() {
   const canDownload = videoId && startTime && endTime && !isLoading;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center space-x-2">
-            <Download className="text-primary-600" size={32} />
-            <span>YouTube Clipper</span>
-          </h1>
-          <p className="text-gray-600 mt-2">
-            Download custom clips from YouTube videos with precise timestamp selection
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+      {/* Header with gradient */}
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-xl">
+        <div className="max-w-5xl mx-auto px-4 py-8">
+          <div className="flex items-center space-x-3 mb-3">
+            <div className="bg-white/20 p-3 rounded-xl backdrop-blur-sm">
+              <Download className="text-white" size={32} />
+            </div>
+            <h1 className="text-4xl font-bold">YouTube Clipper</h1>
+          </div>
+          <p className="text-indigo-100 text-lg">
+            ✨ Create and download custom clips from any YouTube video with precision
           </p>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-5xl mx-auto px-4 py-10 space-y-8">
         
         {/* URL Input Section */}
-        <div className="card">
-          <h2 className="text-xl font-semibold mb-4 flex items-center space-x-2">
-            <Link size={20} />
-            <span>Enter YouTube URL</span>
-          </h2>
+        <div className="card-modern group hover:shadow-2xl transition-all duration-300">
+          <div className="flex items-center space-x-3 mb-6">
+            <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg">
+              <Link size={24} className="text-white" />
+            </div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              Enter YouTube URL
+            </h2>
+          </div>
           
           <form onSubmit={handleUrlSubmit} className="space-y-4">
-            <div>
+            <div className="relative">
               <input
                 type="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://www.youtube.com/watch?v=..."
-                className="input-field"
+                placeholder="Paste your YouTube link here (e.g., https://www.youtube.com/watch?v=...)"
+                className="input-field-modern"
                 disabled={isLoading}
               />
+              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
             </div>
             
             <button
               type="submit"
               disabled={isLoading}
-              className="btn-primary"
+              className="btn-gradient w-full sm:w-auto"
             >
-              Load Video
+              🎬 Load Video
             </button>
           </form>
         </div>
@@ -178,20 +185,24 @@ function App() {
 
         {/* Download Section */}
         {videoId && (
-          <div className="card">
-            <h2 className="text-xl font-semibold mb-4 flex items-center space-x-2">
-              <Download size={20} />
-              <span>Download Clip</span>
-            </h2>
+          <div className="card-modern hover:shadow-2xl transition-all duration-300">
+            <div className="flex items-center space-x-3 mb-6">
+              <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg">
+                <Download size={24} className="text-white" />
+              </div>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                Download Your Clip
+              </h2>
+            </div>
 
             {/* Clip Info */}
             {startTime && endTime && (
-              <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <span className="font-medium text-gray-700">Duration:</span>
-                    <div className="flex items-center space-x-1">
-                      <Clock size={14} />
+              <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-6 rounded-2xl mb-6 border border-indigo-100">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center md:text-left">
+                    <div className="text-sm font-medium text-gray-600 mb-2">⏱️ Duration</div>
+                    <div className="flex items-center justify-center md:justify-start space-x-2 text-lg font-bold text-indigo-700">
+                      <Clock size={18} />
                       <span>{(() => {
                         const duration = calculateDuration(startTime, endTime);
                         return `${duration.minutes}m ${duration.seconds}s`;
@@ -199,14 +210,14 @@ function App() {
                     </div>
                   </div>
                   
-                  <div>
-                    <span className="font-medium text-gray-700">Estimated Size:</span>
-                    <div>~{estimatedSize()}MB</div>
+                  <div className="text-center md:text-left">
+                    <div className="text-sm font-medium text-gray-600 mb-2">💾 Est. Size</div>
+                    <div className="text-lg font-bold text-purple-700">~{estimatedSize()} MB</div>
                   </div>
                   
-                  <div>
-                    <span className="font-medium text-gray-700">Quality:</span>
-                    <div>Up to 4K (2160p)</div>
+                  <div className="text-center md:text-left">
+                    <div className="text-sm font-medium text-gray-600 mb-2">🎬 Quality</div>
+                    <div className="text-lg font-bold text-pink-700">Up to 4K</div>
                   </div>
                 </div>
               </div>
@@ -237,45 +248,70 @@ function App() {
               <button
                 onClick={handleDownload}
                 disabled={!canDownload}
-                className="btn-primary flex items-center space-x-2 text-lg px-8 py-3"
+                className="btn-gradient-large group relative overflow-hidden"
               >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="spinner" size={20} />
-                    <span>Processing...</span>
-                  </>
-                ) : (
-                  <>
-                    <Download size={20} />
-                    <span>Download Clip</span>
-                  </>
-                )}
+                <span className="relative z-10 flex items-center space-x-3">
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="spinner" size={24} />
+                      <span className="text-xl">Processing Your Clip...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Download size={24} className="group-hover:scale-110 transition-transform" />
+                      <span className="text-xl font-bold">Download Clip</span>
+                    </>
+                  )}
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
               </button>
             </div>
 
             {isLoading && (
-              <div className="text-center mt-4">
-                <p className="text-gray-600 text-sm">
-                  This may take a few minutes depending on video length...
-                </p>
+              <div className="text-center mt-6 p-4 bg-blue-50 rounded-lg">
+                <div className="inline-block animate-pulse">
+                  <p className="text-blue-700 font-medium">
+                    ⚡ Processing your video... This may take 1-3 minutes
+                  </p>
+                </div>
               </div>
             )}
           </div>
         )}
 
         {/* Instructions */}
-        <div className="card bg-blue-50 border border-blue-200">
-          <h3 className="font-semibold text-blue-800 mb-2">How to use:</h3>
-          <ol className="list-decimal list-inside space-y-1 text-blue-700 text-sm">
-            <li>Paste a YouTube URL and click "Load Video"</li>
-            <li>Use the player controls to navigate to your desired start time</li>
-            <li>Click "Set Start Time" to mark the beginning of your clip</li>
-            <li>Navigate to your desired end time and click "Set End Time"</li>
-            <li>Click "Download Clip" to generate and download your custom video</li>
+        <div className="card-modern bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200">
+          <div className="flex items-center space-x-2 mb-4">
+            <span className="text-2xl">💡</span>
+            <h3 className="text-xl font-bold text-blue-800">Quick Guide</h3>
+          </div>
+          <ol className="space-y-3 text-blue-700">
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+              <span>Paste a YouTube URL and click <strong>"Load Video"</strong></span>
+            </li>
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+              <span>Use player controls to find your <strong>start time</strong></span>
+            </li>
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+              <span>Click <strong>"Set Start Time"</strong> to mark the beginning</span>
+            </li>
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+              <span>Navigate to your <strong>end time</strong> and set it</span>
+            </li>
+            <li className="flex items-start space-x-3">
+              <span className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+              <span>Hit <strong>"Download Clip"</strong> and get your video! 🎉</span>
+            </li>
           </ol>
-          <p className="text-blue-600 text-xs mt-3">
-            ⚠️ Maximum clip duration: 45 minutes • Supported quality: up to 4K (2160p)
-          </p>
+          <div className="mt-6 p-3 bg-white/60 rounded-lg">
+            <p className="text-blue-800 text-sm font-medium">
+              ⚠️ Max duration: <strong>45 minutes</strong> • Quality: <strong>Up to 4K (2160p)</strong>
+            </p>
+          </div>
         </div>
       </div>
     </div>
