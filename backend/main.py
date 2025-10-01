@@ -72,14 +72,16 @@ def validate_duration(start_time: str, end_time: str) -> None:
 async def download_video(url: str, output_path: str) -> str:
     """Download YouTube video using yt-dlp"""
     ydl_opts = {
-        # Use default format (yt-dlp will choose the best available)
-        # This is the most compatible option for all video types
+        # Download best quality video+audio, with fallbacks for compatibility
+        # Format priority: 4K > 1080p > 720p > any available
+        'format': 'bestvideo[height<=2160]+bestaudio/bestvideo+bestaudio/best',
         'outtmpl': os.path.join(output_path, '%(title)s.%(ext)s'),
         'quiet': False,  # Enable logging to debug issues
         'no_warnings': False,
         'noplaylist': True,  # Download only the video, not the playlist
         'nocheckcertificate': True,  # Bypass SSL certificate verification
         'geo_bypass': True,  # Bypass geographic restrictions
+        'merge_output_format': 'mp4',  # Ensure output is always mp4
         'extractor_args': {
             'youtube': {
                 'player_client': ['android', 'web'],  # Android client is more reliable
